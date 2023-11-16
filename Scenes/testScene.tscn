@@ -12,11 +12,11 @@ position = Vector2(477, 618)
 
 [node name="Polygon2D" type="Polygon2D" parent="StaticBody2D"]
 color = Color(0, 0, 0, 1)
-polygon = PackedVector2Array(-477, 30, -477, -362, -349, -362, -93, -106, 419, -106, 419, -234, 547, -234, 547, -490, 675, -490, 675, -234, 675, 30)
+polygon = PackedVector2Array(-477, 30, -477, -426, -349, -426, -285, -298, -213, -298, -213, -154, -189, -106, 419, -106, 419, -234, 547, -234, 547, -490, 675, -490, 675, -234, 675, 30)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 position = Vector2(-29, 70)
-polygon = PackedVector2Array(-448, -40, -448, -432, -320, -432, -64, -176, 448, -176, 448, -304, 576, -304, 576, -560, 704, -560, 704, -304, 704, -40)
+polygon = PackedVector2Array(-512, -40, -448, -880, -448, -496, -320, -496, -256, -368, -184, -368, -184, -224, -160, -176, 448, -176, 448, -304, 576, -304, 576, -560, 704, -560, 704, -880, 768, -40)
 
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(387, 378)
