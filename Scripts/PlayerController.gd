@@ -10,16 +10,21 @@ var gravDown = 3000;
 var jumpStr = 1000;
 var grounded = false;
 
+var facingDirection = 1;
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
 
-func _input(event):
-	if (event.is_action_pressed("Jump") && grounded):
-		velocity.y = -jumpStr;
+func checkJump():
+	var jumpInput = Input.is_action_pressed("Jump");
+	if(jumpInput):
+		if(grounded):
+			velocity.y = -jumpStr;
 	else:
-		if (event.is_action_released("Jump") && !grounded && velocity.y < 0):
+		if(!grounded && velocity.y < 0):
 			velocity.y *= 0.6;
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -27,8 +32,10 @@ func _process(delta):
 	var xInput = 0;
 	if Input.is_action_pressed("Right"):
 		xInput += 1;
+		facingDirection = 1;
 	if Input.is_action_pressed("Left"):
 		xInput -= 1;
+		facingDirection = -1;
 	
 	if xInput == 0: #todo: change this so it works for controllers
 		#Apply Friction
@@ -36,9 +43,9 @@ func _process(delta):
 			velocity.x = maxf(0, velocity.x - frictionSpeed * delta);
 		else:
 			velocity.x = minf(0, velocity.x + frictionSpeed * delta);
-		
-	
 	velocity.x = clampf(velocity.x + xInput * accelSpeed * delta, -maxSpeed, maxSpeed);
+	
+	checkJump();
 #	print(velocity.x);
 
 	if(!grounded):

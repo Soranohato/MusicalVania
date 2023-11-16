@@ -1,9 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://b7tiv21pb1rcv"]
+[gd_scene load_steps=2 format=3 uid="uid://b7tiv21pb1rcv"]
 
-[ext_resource type="Texture2D" uid="uid://dd3stm6v7khdj" path="res://Assets/icon.svg" id="1_w6sp8"]
-[ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="2_a053c"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_msmdr"]
+[ext_resource type="PackedScene" uid="uid://dv2800t4k4pa0" path="res://Scenes/Player.tscn" id="1_vbo53"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -18,15 +15,5 @@ polygon = PackedVector2Array(-477, 30, -477, -426, -349, -426, -285, -298, -213,
 position = Vector2(-29, 70)
 polygon = PackedVector2Array(-512, -40, -448, -880, -448, -496, -320, -496, -256, -368, -184, -368, -184, -224, -160, -176, 448, -176, 448, -304, 576, -304, 576, -560, 704, -560, 704, -880, 768, -40)
 
-[node name="Player" type="CharacterBody2D" parent="."]
-position = Vector2(387, 378)
-script = ExtResource("2_a053c")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-scale = Vector2(4, 4)
-shape = SubResource("RectangleShape2D_msmdr")
-
-[node name="Sprite2D" type="Sprite2D" parent="Player"]
-position = Vector2(3.05176e-05, 0)
-scale = Vector2(0.625, 0.625)
-texture = ExtResource("1_w6sp8")
+[node name="CharacterBody2D" parent="." instance=ExtResource("1_vbo53")]
+position = Vector2(568, 368)
