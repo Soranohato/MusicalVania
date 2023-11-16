@@ -1,10 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://b7tiv21pb1rcv"]
+[gd_scene load_steps=4 format=3 uid="uid://b7tiv21pb1rcv"]
 
 [ext_resource type="Texture2D" uid="uid://dd3stm6v7khdj" path="res://Assets/icon.svg" id="1_w6sp8"]
 [ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="2_a053c"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_f0dqt"]
-size = Vector2(1147, 63)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_msmdr"]
 
@@ -13,14 +10,13 @@ size = Vector2(1147, 63)
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(477, 618)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(98.5, -1.5)
-shape = SubResource("RectangleShape2D_f0dqt")
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D"]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-477, 30, -477, -362, -349, -362, -93, -106, 419, -106, 419, -234, 547, -234, 547, -490, 675, -490, 675, -234, 675, 30)
 
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D/CollisionShape2D"]
-modulate = Color(0, 0, 0, 1)
-scale = Vector2(8.98, 0.5)
-texture = ExtResource("1_w6sp8")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+position = Vector2(-29, 70)
+polygon = PackedVector2Array(-448, -40, -448, -432, -320, -432, -64, -176, 448, -176, 448, -304, 576, -304, 576, -560, 704, -560, 704, -304, 704, -40)
 
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(387, 378)
