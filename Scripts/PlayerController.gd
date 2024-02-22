@@ -4,10 +4,10 @@ var maxSpeed = 600;
 var accelSpeed = 6000;
 var frictionSpeed = 3000;
 
-var gravUp = 1750;
-var gravDown = 3000;
+var gravUp = 3500;
+var gravDown = 4000;
 
-var jumpStr = 1000;
+var jumpStr = 1200;
 var grounded = false;
 
 var facingDirection = 1;
@@ -57,5 +57,6 @@ func _process(delta):
 			velocity.y += gravDown * delta;
 	
 	move_and_slide();
+	
 	grounded = is_on_floor();
 	pass;
