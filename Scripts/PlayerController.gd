@@ -1,16 +1,17 @@
 extends CharacterBody2D
 
-var maxSpeed = 600;
-var accelSpeed = 6000;
-var frictionSpeed = 3000;
+const maxSpeed = 600;
+const accelSpeed = 6000;
+const frictionSpeed = 3000;
 
-var gravUp = 3500;
-var gravDown = 4000;
+const gravUp = 3500;
+const gravDown = 4000;
 
-var jumpStr = 1200;
+const jumpStr = 1200;
+
 var grounded = false;
-
 var facingDirection = 1;
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -25,10 +26,7 @@ func checkJump():
 		if(!grounded && velocity.y < 0):
 			velocity.y *= 0.6;
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	#Get Input
+func processHorizontalMovement(delta):
 	var xInput = 0;
 	if Input.is_action_pressed("Right"):
 		xInput += 1;
@@ -44,9 +42,9 @@ func _process(delta):
 		else:
 			velocity.x = minf(0, velocity.x + frictionSpeed * delta);
 	velocity.x = clampf(velocity.x + xInput * accelSpeed * delta, -maxSpeed, maxSpeed);
-	
+
+func processVerticalMovement(delta):
 	checkJump();
-#	print(velocity.x);
 
 	if(!grounded):
 		#apply gravity
@@ -55,8 +53,14 @@ func _process(delta):
 			velocity.y += gravUp * delta;
 		else:
 			velocity.y += gravDown * delta;
+
+func processMovement(delta):
+	processHorizontalMovement(delta);
+	processVerticalMovement(delta);
 	
 	move_and_slide();
-	
 	grounded = is_on_floor();
-	pass;
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	processMovement(delta);
