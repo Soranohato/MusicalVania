@@ -9,8 +9,11 @@ const gravDown = 4000;
 
 const jumpStr = 1200;
 
+const attackCooldown = 17.5;
+
 var grounded = false;
 var facingDirection = 1;
+var attackTimer = 0;
 
 
 # Called when the node enters the scene tree for the first time.
@@ -54,7 +57,20 @@ func processVerticalMovement(delta):
 		else:
 			velocity.y += gravDown * delta;
 
+func attack(delta):
+	pass
+
+func processAttack(delta):
+	if (attackTimer <= 0):
+		if (Input.is_action_pressed("Attack")):
+			attackTimer = attackCooldown;
+			print("ATTACKING");
+			attack(delta);
+	else:
+		attackTimer -= 1;
+
 func processMovement(delta):
+	processAttack(delta);
 	processHorizontalMovement(delta);
 	processVerticalMovement(delta);
 	
