@@ -1,3 +1,5 @@
+
+class_name Player
 extends CharacterBody2D
 
 @export_group("Horizontal Movement Settings")
@@ -13,6 +15,13 @@ extends CharacterBody2D
 
 @export_group("Attack Settings")
 @export var attackCooldown = 17.5;
+
+
+@onready
+var animations = $AnimatedSprite2D
+
+@onready
+var state_machine = $StateMachine
 
 var grounded = false;
 var facingDirection = 1;

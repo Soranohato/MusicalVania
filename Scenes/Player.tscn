@@ -1,9 +1,14 @@
-[gd_scene load_steps=22 format=3 uid="uid://dv2800t4k4pa0"]
+[gd_scene load_steps=27 format=3 uid="uid://dv2800t4k4pa0"]
 
-[ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="1_q6aik"]
+[ext_resource type="Script" path="res://Scripts/Player Related/PlayerController.gd" id="1_q6aik"]
 [ext_resource type="Texture2D" uid="uid://cfowvj40ehs54" path="res://Assets/vagabond/assets/SpriteSheets/Idle.png" id="2_gk8uk"]
 [ext_resource type="Texture2D" uid="uid://28oxhpf2fmtd" path="res://Assets/vagabond/assets/SpriteSheets/Run.png" id="3_gmhhe"]
 [ext_resource type="Texture2D" uid="uid://cbsxcapjeqnma" path="res://Assets/vagabond/assets/SpriteSheets/Run_End.png" id="4_8hqus"]
+[ext_resource type="Script" path="res://Scripts/Player Related/States/StateMachine.gd" id="5_81oc3"]
+[ext_resource type="Script" path="res://Scripts/Player Related/States/Idle.gd" id="6_u7paq"]
+[ext_resource type="Script" path="res://Scripts/Player Related/States/Running.gd" id="7_qulu2"]
+[ext_resource type="Script" path="res://Scripts/Player Related/States/Jumping.gd" id="8_ua3my"]
+[ext_resource type="Script" path="res://Scripts/Player Related/States/Falling.gd" id="9_o4qh8"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gjx1i"]
 radius = 6.0
@@ -158,3 +163,21 @@ position = Vector2(56, 0)
 rotation = -1.5708
 shape = SubResource("CapsuleShape2D_bir5c")
 debug_color = Color(0.819608, 0.403922, 0.286275, 0.419608)
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("5_81oc3")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("fall_state", "jump_state", "move_state")]
+script = ExtResource("6_u7paq")
+fall_state = NodePath("../Falling")
+jump_state = NodePath("../Jumping")
+move_state = NodePath("../Running")
+
+[node name="Running" type="Node" parent="StateMachine"]
+script = ExtResource("7_qulu2")
+
+[node name="Jumping" type="Node" parent="StateMachine"]
+script = ExtResource("8_ua3my")
+
+[node name="Falling" type="Node" parent="StateMachine"]
+script = ExtResource("9_o4qh8")
