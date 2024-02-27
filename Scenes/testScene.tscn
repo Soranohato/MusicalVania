@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://b7tiv21pb1rcv"]
+[gd_scene load_steps=6 format=3 uid="uid://b7tiv21pb1rcv"]
 
 [ext_resource type="PackedScene" uid="uid://dv2800t4k4pa0" path="res://Scenes/Player.tscn" id="1_vbo53"]
 [ext_resource type="Texture2D" uid="uid://cergab6ubwfv" path="res://Assets/vagabond/assets/tilesets/desert-ruins.png" id="2_1f24w"]
+[ext_resource type="PackedScene" uid="uid://b2p55uxqpobdd" path="res://Scenes/TestDummy.tscn" id="3_chxm7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rskme"]
 texture = ExtResource("2_1f24w")
@@ -259,3 +260,6 @@ layer_0/tile_data = PackedInt32Array(458760, 131072, 1, 458761, 131072, 1, 45876
 
 [node name="Player" parent="." instance=ExtResource("1_vbo53")]
 position = Vector2(568, 368)
+
+[node name="TestDummy" parent="." instance=ExtResource("3_chxm7")]
+position = Vector2(-2784, 832)

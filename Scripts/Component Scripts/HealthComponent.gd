@@ -8,7 +8,8 @@ var currentHealth: int = MAX_HEALTH
 
 func takeDamage(damage:int):
 	currentHealth -= damageScaling(damage)
-	print("DIE") #TODO
+	if currentHealth<=0:
+		print("DIE") #TODO
 
 func damageScaling(damage: int) -> int:
 	return damage #TODO

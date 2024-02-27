@@ -168,6 +168,7 @@ shape = SubResource("CapsuleShape2D_gjx1i")
 debug_color = Color(0.729412, 0.368627, 0.764706, 0.419608)
 
 [node name="HitboxComponent" parent="." instance=ExtResource("7_k4dtg")]
+damageAmount = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
 position = Vector2(58.09, 0)

@@ -5,9 +5,21 @@ class_name HurtboxComponent
 var healthComponent: HealthComponent
 
 @export
-var immunityDuration = 4 #TODO
+var immunityDuration = 40 #TODO
 
-func _on_area_entered(area):
-	if not (area is HitboxComponent):
+var immunityTimer = 0
+
+
+
+func _physics_process(delta):
+	
+	if immunityTimer >= 0:
+		immunityTimer-=1
 		return
-	healthComponent.takeDamage(area.damageAmount)
+	
+	var areas: Array[Area2D] = get_overlapping_areas()
+	for area in areas:
+		if (area is HitboxComponent):
+			print("AHA!")
+			healthComponent.takeDamage(area.damageAmount)
+			immunityTimer = immunityDuration
