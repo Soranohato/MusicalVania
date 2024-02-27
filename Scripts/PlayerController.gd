@@ -1,15 +1,18 @@
 extends CharacterBody2D
 
-const maxSpeed = 600;
-const accelSpeed = 6000;
-const frictionSpeed = 3000;
+@export_group("Horizontal Movement Settings")
+@export var maxSpeed = 600;
+@export var accelSpeed = 6000;
+@export var frictionSpeed = 3000;
 
-const gravUp = 3500;
-const gravDown = 4000;
+@export_group("Vertical Movement Settings")
+@export var gravUp = 3500;
+@export var gravDown = 4000;
+@export var jumpStr = 1200;
+@export var airFriction = 0.6;
 
-const jumpStr = 1200;
-
-const attackCooldown = 17.5;
+@export_group("Attack Settings")
+@export var attackCooldown = 17.5;
 
 var grounded = false;
 var facingDirection = 1;
@@ -27,7 +30,7 @@ func checkJump():
 			velocity.y = -jumpStr;
 	else:
 		if(!grounded && velocity.y < 0):
-			velocity.y *= 0.6;
+			velocity.y *= airFriction;
 
 func processHorizontalMovement(delta):
 	var xInput = 0;

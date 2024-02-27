@@ -131,8 +131,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bir5c"]
-radius = 32.0
-height = 96.0
+radius = 48.0
+height = 144.0
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 script = ExtResource("1_q6aik")
@@ -154,7 +154,7 @@ animation = &"Idle"
 [node name="AttackHitbox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox"]
-position = Vector2(32, 0)
+position = Vector2(56, 0)
 rotation = -1.5708
 shape = SubResource("CapsuleShape2D_bir5c")
 debug_color = Color(0.819608, 0.403922, 0.286275, 0.419608)
