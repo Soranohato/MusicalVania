@@ -1,9 +1,7 @@
 extends CharacterBody2D
 
-@export_group("Horizontal Movement Settings")
-@export var maxSpeed = 600;
-@export var accelSpeed = 6000;
-@export var frictionSpeed = 3000;
+@export
+var movementComponent: MovementComponent
 
 @export_group("Vertical Movement Settings")
 @export var gravUp = 3500;
@@ -40,25 +38,27 @@ func processHorizontalMovement(delta):
 	if Input.is_action_pressed("Left"):
 		xInput -= 1;
 		facingDirection = -1;
+		
+	movementComponent.accelerate(xInput, delta)
 	
-	if xInput == 0: #todo: change this so it works for controllers
-		#Apply Friction
-		if velocity.x >= 0:
-			velocity.x = maxf(0, velocity.x - frictionSpeed * delta);
-		else:
-			velocity.x = minf(0, velocity.x + frictionSpeed * delta);
-	velocity.x = clampf(velocity.x + xInput * accelSpeed * delta, -maxSpeed, maxSpeed);
+	#if xInput == 0: #todo: change this so it works for controllers
+		##Apply Friction
+		#if velocity.x >= 0:
+			#velocity.x = maxf(0, velocity.x - frictionSpeed * delta);
+		#else:
+			#velocity.x = minf(0, velocity.x + frictionSpeed * delta);
+	#velocity.x = clampf(velocity.x + xInput * accelSpeed * delta, -maxSpeed, maxSpeed);
 
 func processVerticalMovement(delta):
 	checkJump();
 
-	if(!grounded):
-		#apply gravity
-		if(velocity.y < 0 && Input.is_action_pressed("Jump")):
-			#going up and holding jump, so use weaker gravity
-			velocity.y += gravUp * delta;
-		else:
-			velocity.y += gravDown * delta;
+	#if(!grounded):
+		##apply gravity
+		#if(velocity.y < 0 && Input.is_action_pressed("Jump")):
+			##going up and holding jump, so use weaker gravity
+			#velocity.y += gravUp * delta;
+		#else:
+			#velocity.y += gravDown * delta;
 
 func attack(delta):
 	pass
