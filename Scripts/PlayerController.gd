@@ -1,18 +1,24 @@
 extends CharacterBody2D
 
+## Handles movement implementation.
 @export
 var movementComponent: MovementComponent
 
+## Handles attack implementation.
 @export
 var hitboxComponent: HitboxComponent
 
 @export_group("Vertical Movement Settings")
 #@export var gravUp = 3500
 #@export var gravDown = 4000
+## Controls the force of the jump.
 @export var jumpStr = 1200
+
+## Controls the amount of air friction experienced when falling.
 @export var airFriction = 0.6
 
 @export_group("Attack Settings")
+## Controls the cooldown period between attacks
 @export var attackCooldown = 17.5
 
 var grounded = false
@@ -34,6 +40,7 @@ func checkJump():
 			velocity.y *= airFriction
 
 func processHorizontalMovement(delta):
+	# Decides movement
 	var xInput = 0
 	if Input.is_action_pressed("Right"):
 		xInput += 1
@@ -44,11 +51,8 @@ func processHorizontalMovement(delta):
 		
 	movementComponent.accelerate(xInput, delta)
 
-func attack(delta):
-	pass
-
 func processAttack(delta):
-	if (attackTimer <= 0):
+	if (attackTimer <= 0 && !hitboxComponent.attacking):
 		if (Input.is_action_pressed("Attack")):
 			attackTimer = attackCooldown
 			print("ATTACKING")
@@ -60,7 +64,6 @@ func processAttack(delta):
 		attackTimer -= 1;
 
 func processMovement(delta):
-	processAttack(delta)
 	processHorizontalMovement(delta)
 	checkJump()
 	
@@ -69,4 +72,5 @@ func processMovement(delta):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	processAttack(delta)
 	processMovement(delta)
