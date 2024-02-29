@@ -4,10 +4,12 @@ class_name HealthComponent
 @export
 var MAX_HEALTH: int = 100
 
-var currentHealth: int = MAX_HEALTH
+@export
+var currentHealth: int
 
 func takeDamage(damage:int):
 	currentHealth -= damageScaling(damage)
+	print("OOF: "+str(currentHealth))
 	if currentHealth<=0:
 		print("DIE") #TODO
 

@@ -4,11 +4,11 @@
 [ext_resource type="Texture2D" uid="uid://cfowvj40ehs54" path="res://Assets/vagabond/assets/SpriteSheets/Idle.png" id="2_gk8uk"]
 [ext_resource type="Texture2D" uid="uid://28oxhpf2fmtd" path="res://Assets/vagabond/assets/SpriteSheets/Run.png" id="3_gmhhe"]
 [ext_resource type="Texture2D" uid="uid://cbsxcapjeqnma" path="res://Assets/vagabond/assets/SpriteSheets/Run_End.png" id="4_8hqus"]
-[ext_resource type="PackedScene" uid="uid://smtacnepbaua" path="res://Components/health_component.tscn" id="5_07hx5"]
-[ext_resource type="PackedScene" uid="uid://c2x80f4ocwuw8" path="res://Components/hurtbox_component.tscn" id="6_l5fo6"]
-[ext_resource type="PackedScene" uid="uid://bkjqbhlgoveq3" path="res://Components/hitbox_component.tscn" id="7_k4dtg"]
-[ext_resource type="PackedScene" uid="uid://cx62o0srwd1m" path="res://Components/gravity_component.tscn" id="8_a00bx"]
-[ext_resource type="PackedScene" uid="uid://c41o7njmqotc1" path="res://Components/movement_component.tscn" id="9_ujtt6"]
+[ext_resource type="PackedScene" uid="uid://smtacnepbaua" path="res://Scenes/Components/health_component.tscn" id="5_esqbx"]
+[ext_resource type="PackedScene" uid="uid://c2x80f4ocwuw8" path="res://Scenes/Components/hurtbox_component.tscn" id="6_14vca"]
+[ext_resource type="PackedScene" uid="uid://bkjqbhlgoveq3" path="res://Scenes/Components/hitbox_component.tscn" id="7_op1sp"]
+[ext_resource type="PackedScene" uid="uid://cx62o0srwd1m" path="res://Scenes/Components/gravity_component.tscn" id="8_2rxij"]
+[ext_resource type="PackedScene" uid="uid://c41o7njmqotc1" path="res://Scenes/Components/movement_component.tscn" id="9_nnxxl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hwir0"]
 atlas = ExtResource("2_gk8uk")
@@ -138,9 +138,10 @@ height = 28.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uxh4s"]
 size = Vector2(64, 64)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movementComponent")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movementComponent", "hitboxComponent")]
 script = ExtResource("1_q6aik")
 movementComponent = NodePath("MovementComponent")
+hitboxComponent = NodePath("HitboxComponent")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -40)
@@ -156,9 +157,11 @@ animation = &"Idle"
 scale = Vector2(4, 4)
 shape = SubResource("CapsuleShape2D_gjx1i")
 
-[node name="HealthComponent" parent="." instance=ExtResource("5_07hx5")]
+[node name="HealthComponent" parent="." instance=ExtResource("5_esqbx")]
+MAX_HEALTH = 20
+currentHealth = 20
 
-[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("healthComponent") instance=ExtResource("6_l5fo6")]
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("healthComponent") instance=ExtResource("6_14vca")]
 healthComponent = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
@@ -167,7 +170,7 @@ scale = Vector2(4, 4)
 shape = SubResource("CapsuleShape2D_gjx1i")
 debug_color = Color(0.729412, 0.368627, 0.764706, 0.419608)
 
-[node name="HitboxComponent" parent="." instance=ExtResource("7_k4dtg")]
+[node name="HitboxComponent" parent="." instance=ExtResource("7_op1sp")]
 damageAmount = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
@@ -175,12 +178,12 @@ position = Vector2(58.09, 0)
 shape = SubResource("RectangleShape2D_uxh4s")
 debug_color = Color(0.968627, 0.152941, 0.219608, 0.419608)
 
-[node name="GravityComponent" parent="." node_paths=PackedStringArray("parent") instance=ExtResource("8_a00bx")]
+[node name="GravityComponent" parent="." node_paths=PackedStringArray("parent") instance=ExtResource("8_2rxij")]
 parent = NodePath("..")
 gravity = 4000.0
 airFriction = 0.9
 
-[node name="MovementComponent" parent="." node_paths=PackedStringArray("parent") instance=ExtResource("9_ujtt6")]
+[node name="MovementComponent" parent="." node_paths=PackedStringArray("parent") instance=ExtResource("9_nnxxl")]
 parent = NodePath("..")
 MAX_VELOCITY = 600.0
 horizontalFriction = 3000.0

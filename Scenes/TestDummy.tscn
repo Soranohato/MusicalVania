@@ -31,6 +31,8 @@ gravity = 4000.0
 [node name="HealthComponent" type="Node2D" parent="."]
 scale = Vector2(2, 2)
 script = ExtResource("2_b1g3j")
+MAX_HEALTH = 10
+currentHealth = 10
 
 [node name="HurtboxComponent" type="Area2D" parent="." node_paths=PackedStringArray("healthComponent")]
 scale = Vector2(2, 2)

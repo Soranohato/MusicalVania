@@ -11,7 +11,7 @@ var immunityTimer = 0
 
 
 
-func _physics_process(delta):
+func _process(delta):
 	
 	if immunityTimer >= 0:
 		immunityTimer-=1
@@ -19,7 +19,7 @@ func _physics_process(delta):
 	
 	var areas: Array[Area2D] = get_overlapping_areas()
 	for area in areas:
-		if (area is HitboxComponent):
+		if (area is HitboxComponent) and area.attacking:
 			print("AHA!")
 			healthComponent.takeDamage(area.damageAmount)
 			immunityTimer = immunityDuration
