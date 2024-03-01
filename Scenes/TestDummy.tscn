@@ -1,0 +1,48 @@
+[gd_scene load_steps=6 format=3 uid="uid://b2p55uxqpobdd"]
+
+[ext_resource type="Script" path="res://Scripts/Component Scripts/GravityComponent.gd" id="1_gvb3m"]
+[ext_resource type="Script" path="res://Scripts/Component Scripts/HealthComponent.gd" id="2_b1g3j"]
+[ext_resource type="Script" path="res://Scripts/Component Scripts/HurtboxComponent.gd" id="3_pjtau"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_21ddc"]
+size = Vector2(16, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q2x2x"]
+size = Vector2(8, 16)
+
+[node name="TestDummy" type="CharacterBody2D"]
+scale = Vector2(2, 2)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(2, 2)
+shape = SubResource("RectangleShape2D_21ddc")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+scale = Vector2(2, 2)
+color = Color(0.956863, 0.752941, 0.607843, 1)
+polygon = PackedVector2Array(-8, 16, -8, -16, 8, -16, 8, 16)
+
+[node name="GravityComponent" type="Node2D" parent="." node_paths=PackedStringArray("parent")]
+scale = Vector2(2, 2)
+script = ExtResource("1_gvb3m")
+parent = NodePath("..")
+gravity = 4000.0
+
+[node name="HealthComponent" type="Node2D" parent="."]
+scale = Vector2(2, 2)
+script = ExtResource("2_b1g3j")
+MAX_HEALTH = 10
+currentHealth = 10
+
+[node name="HurtboxComponent" type="Area2D" parent="." node_paths=PackedStringArray("healthComponent")]
+scale = Vector2(2, 2)
+collision_layer = 2
+script = ExtResource("3_pjtau")
+healthComponent = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+scale = Vector2(2, 2)
+shape = SubResource("RectangleShape2D_q2x2x")
+debug_color = Color(0.878431, 0.188235, 0.705882, 0.419608)
+
+[connection signal="area_entered" from="HurtboxComponent" to="HurtboxComponent" method="_on_area_entered"]

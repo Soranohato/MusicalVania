@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cknihh8ou3y3l"]
+
+[ext_resource type="Script" path="res://Scripts/Component Scripts/SweepingHitboxComponent.gd" id="1_ugsy1"]
+
+[node name="SweepingHitboxComponent" type="Area2D"]
+script = ExtResource("1_ugsy1")

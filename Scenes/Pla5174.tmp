@@ -1,15 +1,14 @@
-[gd_scene load_steps=31 format=3 uid="uid://dv2800t4k4pa0"]
+[gd_scene load_steps=27 format=3 uid="uid://dv2800t4k4pa0"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="1_q6aik"]
 [ext_resource type="Texture2D" uid="uid://cfowvj40ehs54" path="res://Assets/vagabond/assets/SpriteSheets/Idle.png" id="2_gk8uk"]
 [ext_resource type="Texture2D" uid="uid://28oxhpf2fmtd" path="res://Assets/vagabond/assets/SpriteSheets/Run.png" id="3_gmhhe"]
 [ext_resource type="Texture2D" uid="uid://cbsxcapjeqnma" path="res://Assets/vagabond/assets/SpriteSheets/Run_End.png" id="4_8hqus"]
-[ext_resource type="PackedScene" uid="uid://smtacnepbaua" path="res://Scenes/Components/health_component.tscn" id="5_esqbx"]
-[ext_resource type="PackedScene" uid="uid://c2x80f4ocwuw8" path="res://Scenes/Components/hurtbox_component.tscn" id="6_14vca"]
-[ext_resource type="PackedScene" uid="uid://cx62o0srwd1m" path="res://Scenes/Components/gravity_component.tscn" id="8_2rxij"]
-[ext_resource type="PackedScene" uid="uid://cknihh8ou3y3l" path="res://Scenes/Components/sweeping_hitbox_component.tscn" id="9_jxivw"]
-[ext_resource type="PackedScene" uid="uid://c41o7njmqotc1" path="res://Scenes/Components/movement_component.tscn" id="9_nnxxl"]
-[ext_resource type="PackedScene" uid="uid://dayooqvfqqeg0" path="res://Scenes/Components/jump_component.tscn" id="10_t32w4"]
+[ext_resource type="PackedScene" uid="uid://smtacnepbaua" path="res://Components/health_component.tscn" id="5_07hx5"]
+[ext_resource type="PackedScene" uid="uid://c2x80f4ocwuw8" path="res://Components/hurtbox_component.tscn" id="6_l5fo6"]
+[ext_resource type="PackedScene" uid="uid://bkjqbhlgoveq3" path="res://Components/hitbox_component.tscn" id="7_k4dtg"]
+[ext_resource type="PackedScene" uid="uid://cx62o0srwd1m" path="res://Components/gravity_component.tscn" id="8_a00bx"]
+[ext_resource type="PackedScene" uid="uid://c41o7njmqotc1" path="res://Components/movement_component.tscn" id="9_ujtt6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hwir0"]
 atlas = ExtResource("2_gk8uk")
@@ -139,48 +138,9 @@ height = 28.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uxh4s"]
 size = Vector2(64, 64)
 
-[sub_resource type="Animation" id="Animation_l7c1q"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("SweepingHitboxComponent/CollisionShape2D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(57.5, -72)]
-}
-
-[sub_resource type="Animation" id="Animation_wiyft"]
-resource_name = "slam_attack"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("SweepingHitboxComponent/CollisionShape2D:position")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(8.28212, 4.14106),
-"update": 0,
-"values": [Vector2(57.5, -72), Vector2(57.5, 24)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_v5nic"]
-_data = {
-"RESET": SubResource("Animation_l7c1q"),
-"slam_attack": SubResource("Animation_wiyft")
-}
-
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movementComponent", "hitboxComponent", "jumpComponent")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movementComponent")]
 script = ExtResource("1_q6aik")
 movementComponent = NodePath("MovementComponent")
-hitboxComponent = NodePath("SweepingHitboxComponent")
-jumpComponent = NodePath("JumpComponent")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -40)
@@ -196,11 +156,9 @@ animation = &"Idle"
 scale = Vector2(4, 4)
 shape = SubResource("CapsuleShape2D_gjx1i")
 
-[node name="HealthComponent" parent="." instance=ExtResource("5_esqbx")]
-MAX_HEALTH = 20
-currentHealth = 20
+[node name="HealthComponent" parent="." instance=ExtResource("5_07hx5")]
 
-[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("healthComponent") instance=ExtResource("6_14vca")]
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("healthComponent") instance=ExtResource("6_l5fo6")]
 healthComponent = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
@@ -209,40 +167,20 @@ scale = Vector2(4, 4)
 shape = SubResource("CapsuleShape2D_gjx1i")
 debug_color = Color(0.729412, 0.368627, 0.764706, 0.419608)
 
-[node name="GravityComponent" parent="." node_paths=PackedStringArray("parent") instance=ExtResource("8_2rxij")]
+[node name="HitboxComponent" parent="." instance=ExtResource("7_k4dtg")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(58.09, 0)
+shape = SubResource("RectangleShape2D_uxh4s")
+debug_color = Color(0.968627, 0.152941, 0.219608, 0.419608)
+
+[node name="GravityComponent" parent="." node_paths=PackedStringArray("parent") instance=ExtResource("8_a00bx")]
 parent = NodePath("..")
 gravity = 4000.0
 airFriction = 0.9
 
-[node name="MovementComponent" parent="." node_paths=PackedStringArray("parent") instance=ExtResource("9_nnxxl")]
+[node name="MovementComponent" parent="." node_paths=PackedStringArray("parent") instance=ExtResource("9_ujtt6")]
 parent = NodePath("..")
 MAX_VELOCITY = 600.0
 horizontalFriction = 3000.0
 acceleration = 6000.0
-
-[node name="SweepingHitboxComponent" parent="." node_paths=PackedStringArray("sweepAnimation") instance=ExtResource("9_jxivw")]
-sweepAnimation = NodePath("AnimationPlayer")
-animationName = "slam_attack"
-damageAmount = 5
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SweepingHitboxComponent"]
-position = Vector2(57.5, -72)
-shape = SubResource("RectangleShape2D_uxh4s")
-debug_color = Color(0.968627, 0.152941, 0.219608, 0.419608)
-
-[node name="Polygon2D" type="Polygon2D" parent="SweepingHitboxComponent/CollisionShape2D"]
-visible = false
-position = Vector2(1.5, 0)
-color = Color(1, 0.419608, 0.376471, 1)
-polygon = PackedVector2Array(-33.5, 32, 30.5, 32, 30.5, -32, -33.5, -32)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="SweepingHitboxComponent"]
-root_node = NodePath("../..")
-libraries = {
-"": SubResource("AnimationLibrary_v5nic")
-}
-
-[node name="JumpComponent" parent="." node_paths=PackedStringArray("parent") instance=ExtResource("10_t32w4")]
-parent = NodePath("..")
-jumpStr = 1200.0
-jumpFriction = 0.6
