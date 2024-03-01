@@ -8,14 +8,8 @@ var movementComponent: MovementComponent
 @export
 var hitboxComponent: HitboxComponent
 
-@export_group("Vertical Movement Settings")
-#@export var gravUp = 3500
-#@export var gravDown = 4000
-## Controls the force of the jump.
-@export var jumpStr = 1200
-
-## Controls the amount of air friction experienced when falling.
-@export var airFriction = 0.6
+@export
+var jumpComponent: JumpComponent
 
 @export_group("Attack Settings")
 ## Controls the cooldown period between attacks
@@ -33,11 +27,9 @@ func _ready():
 func checkJump():
 	var jumpInput = Input.is_action_pressed("Jump")
 	if(jumpInput):
-		if(grounded):
-			velocity.y = -jumpStr
+		jumpComponent.jump()
 	else:
-		if(!grounded && velocity.y < 0):
-			velocity.y *= airFriction
+		jumpComponent.jumpAirFriction()
 
 func processHorizontalMovement(delta):
 	# Decides movement

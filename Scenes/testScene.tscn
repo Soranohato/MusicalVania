@@ -262,4 +262,4 @@ layer_0/tile_data = PackedInt32Array(458760, 131072, 1, 458761, 131072, 1, 45876
 position = Vector2(568, 368)
 
 [node name="TestDummy" parent="." instance=ExtResource("3_chxm7")]
-position = Vector2(-2784, 832)
+position = Vector2(928, 384)

@@ -36,6 +36,7 @@ currentHealth = 10
 
 [node name="HurtboxComponent" type="Area2D" parent="." node_paths=PackedStringArray("healthComponent")]
 scale = Vector2(2, 2)
+collision_layer = 2
 script = ExtResource("3_pjtau")
 healthComponent = NodePath("../HealthComponent")
 
