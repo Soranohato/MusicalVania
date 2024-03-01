@@ -231,7 +231,6 @@ shape = SubResource("RectangleShape2D_uxh4s")
 debug_color = Color(0.968627, 0.152941, 0.219608, 0.419608)
 
 [node name="Polygon2D" type="Polygon2D" parent="SweepingHitboxComponent/CollisionShape2D"]
-visible = false
 position = Vector2(1.5, 0)
 color = Color(1, 0.419608, 0.376471, 1)
 polygon = PackedVector2Array(-33.5, 32, 30.5, 32, 30.5, -32, -33.5, -32)
