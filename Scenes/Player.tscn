@@ -219,6 +219,7 @@ parent = NodePath("..")
 MAX_VELOCITY = 600.0
 horizontalFriction = 3000.0
 acceleration = 6000.0
+faceDirectionOfMotion = true
 
 [node name="SweepingHitboxComponent" parent="." node_paths=PackedStringArray("sweepAnimation") instance=ExtResource("9_jxivw")]
 sweepAnimation = NodePath("AnimationPlayer")
@@ -243,5 +244,5 @@ libraries = {
 
 [node name="JumpComponent" parent="." node_paths=PackedStringArray("parent") instance=ExtResource("10_t32w4")]
 parent = NodePath("..")
-jumpStr = 1200.0
+jumpStr = 1250.0
 jumpFriction = 0.6
