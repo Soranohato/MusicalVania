@@ -65,6 +65,7 @@ Below is a sample code:
 			parent.velocity.y += gravity*airFriction*delta
 		else:
 			parent.velocity.y += gravity*delta
+```
 
 The export variables here are variables whose values will be initialized during run-time and can be changed through the editor. If a component requires a reference to another component, It is advised to make that an export variable, so that the value of the reference can be changed and edited based off of the situation.
 
