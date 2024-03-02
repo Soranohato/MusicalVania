@@ -44,6 +44,7 @@ Now we attach a script, with the component script located in <u><i>Scripts/Compo
 
 Below is a sample code:
 
+```gdscript
 	extends Node2D
 	class_name GravityComponent
 
