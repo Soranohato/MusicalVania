@@ -1,11 +1,16 @@
-[gd_scene load_steps=31 format=3 uid="uid://dv2800t4k4pa0"]
+[gd_scene load_steps=36 format=3 uid="uid://dv2800t4k4pa0"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="1_q6aik"]
 [ext_resource type="Texture2D" uid="uid://cfowvj40ehs54" path="res://Assets/vagabond/assets/SpriteSheets/Idle.png" id="2_gk8uk"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="2_reyws"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="3_a1ycr"]
 [ext_resource type="Texture2D" uid="uid://28oxhpf2fmtd" path="res://Assets/vagabond/assets/SpriteSheets/Run.png" id="3_gmhhe"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="3_pp1mv"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="4_2m8th"]
 [ext_resource type="Texture2D" uid="uid://cbsxcapjeqnma" path="res://Assets/vagabond/assets/SpriteSheets/Run_End.png" id="4_8hqus"]
 [ext_resource type="PackedScene" uid="uid://smtacnepbaua" path="res://Scenes/Components/health_component.tscn" id="5_esqbx"]
 [ext_resource type="PackedScene" uid="uid://c2x80f4ocwuw8" path="res://Scenes/Components/hurtbox_component.tscn" id="6_14vca"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="6_ciro3"]
 [ext_resource type="PackedScene" uid="uid://cx62o0srwd1m" path="res://Scenes/Components/gravity_component.tscn" id="8_2rxij"]
 [ext_resource type="PackedScene" uid="uid://cknihh8ou3y3l" path="res://Scenes/Components/sweeping_hitbox_component.tscn" id="9_jxivw"]
 [ext_resource type="PackedScene" uid="uid://c41o7njmqotc1" path="res://Scenes/Components/movement_component.tscn" id="9_nnxxl"]
@@ -181,6 +186,127 @@ script = ExtResource("1_q6aik")
 movementComponent = NodePath("MovementComponent")
 hitboxComponent = NodePath("SweepingHitboxComponent")
 jumpComponent = NodePath("JumpComponent")
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("2_reyws")
+
+[node name="Root" type="Node" parent="StateChart"]
+script = ExtResource("3_a1ycr")
+
+[node name="PhysicsStates" type="Node" parent="StateChart/Root"]
+script = ExtResource("3_pp1mv")
+initial_state = NodePath("isGrounded")
+
+[node name="isGrounded" type="Node" parent="StateChart/Root/PhysicsStates"]
+script = ExtResource("4_2m8th")
+
+[node name="toRising" type="Node" parent="StateChart/Root/PhysicsStates/isGrounded"]
+script = ExtResource("6_ciro3")
+to = NodePath("../../isRising")
+event = &"player_jump"
+
+[node name="toFalling" type="Node" parent="StateChart/Root/PhysicsStates/isGrounded"]
+script = ExtResource("6_ciro3")
+to = NodePath("../../isFalling")
+
+[node name="isFalling" type="Node" parent="StateChart/Root/PhysicsStates"]
+script = ExtResource("4_2m8th")
+
+[node name="toGrounded" type="Node" parent="StateChart/Root/PhysicsStates/isFalling"]
+script = ExtResource("6_ciro3")
+to = NodePath("../../isGrounded")
+
+[node name="isRising" type="Node" parent="StateChart/Root/PhysicsStates"]
+script = ExtResource("4_2m8th")
+
+[node name="toFalling" type="Node" parent="StateChart/Root/PhysicsStates/isRising"]
+script = ExtResource("6_ciro3")
+to = NodePath("../../isFalling")
+
+[node name="ControlStates" type="Node" parent="StateChart/Root"]
+script = ExtResource("3_a1ycr")
+
+[node name="Movement" type="Node" parent="StateChart/Root/ControlStates"]
+script = ExtResource("3_pp1mv")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateChart/Root/ControlStates/Movement"]
+script = ExtResource("4_2m8th")
+
+[node name="toRunning" type="Node" parent="StateChart/Root/ControlStates/Movement/Idle"]
+script = ExtResource("6_ciro3")
+to = NodePath("../../Running")
+event = &"player_running_start"
+
+[node name="toJumping" type="Node" parent="StateChart/Root/ControlStates/Movement/Idle"]
+script = ExtResource("6_ciro3")
+to = NodePath("../../Jumping")
+event = &"player_jumping_start"
+
+[node name="toFalling" type="Node" parent="StateChart/Root/ControlStates/Movement/Idle"]
+script = ExtResource("6_ciro3")
+to = NodePath("../../Falling")
+event = &"player_falling_start"
+
+[node name="Jumping" type="Node" parent="StateChart/Root/ControlStates/Movement"]
+script = ExtResource("4_2m8th")
+
+[node name="toFalling" type="Node" parent="StateChart/Root/ControlStates/Movement/Jumping"]
+script = ExtResource("6_ciro3")
+to = NodePath("../../Falling")
+event = &"player_jump_peak"
+
+[node name="Running" type="Node" parent="StateChart/Root/ControlStates/Movement"]
+script = ExtResource("4_2m8th")
+
+[node name="toIdle" type="Node" parent="StateChart/Root/ControlStates/Movement/Running"]
+script = ExtResource("6_ciro3")
+to = NodePath("../../Idle")
+event = &"player_run_end"
+
+[node name="toJumping" type="Node" parent="StateChart/Root/ControlStates/Movement/Running"]
+script = ExtResource("6_ciro3")
+to = NodePath("../../Jumping")
+event = &"player_fall_jump"
+
+[node name="toFall" type="Node" parent="StateChart/Root/ControlStates/Movement/Running"]
+script = ExtResource("6_ciro3")
+to = NodePath("../../Falling")
+event = &"player_run_fall"
+
+[node name="Falling" type="Node" parent="StateChart/Root/ControlStates/Movement"]
+script = ExtResource("4_2m8th")
+
+[node name="toIdle" type="Node" parent="StateChart/Root/ControlStates/Movement/Falling"]
+script = ExtResource("6_ciro3")
+to = NodePath("../../Idle")
+event = &"player_fall_end"
+
+[node name="toRunning" type="Node" parent="StateChart/Root/ControlStates/Movement/Falling"]
+script = ExtResource("6_ciro3")
+to = NodePath("../../Running")
+event = &"player_fall_run"
+
+[node name="toJumping" type="Node" parent="StateChart/Root/ControlStates/Movement/Falling"]
+script = ExtResource("6_ciro3")
+to = NodePath("../../Jumping")
+event = &"player_fall_jump"
+
+[node name="Attacking" type="Node" parent="StateChart/Root/ControlStates"]
+script = ExtResource("3_pp1mv")
+initial_state = NodePath("notAttacking")
+
+[node name="notAttacking" type="Node" parent="StateChart/Root/ControlStates/Attacking"]
+script = ExtResource("4_2m8th")
+
+[node name="AttackLight" type="Node" parent="StateChart/Root/ControlStates/Attacking"]
+script = ExtResource("4_2m8th")
+
+[node name="AtatckMedium" type="Node" parent="StateChart/Root/ControlStates/Attacking"]
+script = ExtResource("4_2m8th")
+
+[node name="AttackHeavy" type="Node" parent="StateChart/Root/ControlStates/Attacking"]
+script = ExtResource("4_2m8th")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -40)
