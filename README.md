@@ -1,5 +1,8 @@
 # Introduction:
 
+Note: This is a markdown file, which for some reason Godot does not format. I'd suggest you open this file using VS Code or some other md viewer as that would make life easier...
+If you know a Godot Addon that allows the editor to view mark down files please lmk
+
 Welcome Programmer! This section is designed to be a rough introduction to how we are structuring the overall code for the game, and will also contain a list of tasks to be completed.
 
 ### Commonly Used Links:
@@ -41,26 +44,26 @@ Now we attach a script, with the component script located in <u><i>Scripts/Compo
 
 Below is a sample code:
 
-    extends Node2D
-    class_name GravityComponent
+	extends Node2D
+	class_name GravityComponent
 
-    @export
-    var parent: CharacterBody2D
+	@export
+	var parent: CharacterBody2D
 
-    @export
-    var gravity: float
+	@export
+	var gravity: float
 
-    @export
-    var airFriction: float = 0.6
+	@export
+	var airFriction: float = 0.6
 
-    func _physics_process(delta):
-    	if parent.is_on_floor():
-    		return
+	func _physics_process(delta):
+		if parent.is_on_floor():
+			return
 
-    	if parent.velocity.y>0:
-    		parent.velocity.y += gravity*airFriction*delta
-    	else:
-    		parent.velocity.y += gravity*delta
+		if parent.velocity.y>0:
+			parent.velocity.y += gravity*airFriction*delta
+		else:
+			parent.velocity.y += gravity*delta
 
 The export variables here are variables whose values will be initialized during run-time and can be changed through the editor. If a component requires a reference to another component, It is advised to make that an export variable, so that the value of the reference can be changed and edited based off of the situation.
 
