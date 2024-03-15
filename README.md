@@ -87,14 +87,28 @@ Here's a list of terminology we are using in the code:
 
 If you feel like programming but aren't sure what to work on, feel free to choose one of the following or add one of your own:
 
-- [_] <b>Heavy Attack</b>
-- [_] <b>Medium Attack</b>
-- [_] <b>State Machine</b>: Advait
-- [_] <b>Enemy</b>
-- [_] <b>Projectiles</b>
-- [_] <b>Animation Implementation</b>
-- [X] <b>Health Component</b>
-- [X] <b>Gravity Component</b>
+#### Open Tasks
+
+- [_] <b>Enemies:</b>
+	- [_] <b>Basic Enemy</b> (M, High Priority)
+	- [_] <b>Heavy Enemy</b> (M, Medium Priority)
+	- [_] <b>Boss</b> (D++, Low Low Priority)
+- [_] <b>Death & Respawn System</b> (M, High Priority)
+- [_] <b>Cooldown System</b> (E++, High Priority) - <i>Advait</i>
+- [_] <b>In-Place Dodge</b> (E++, Medium Priority) - <i>August?</i>
+- [_] <b>Mapping</b> (D, Medium Priority)
+- [_] <b>Object Interaction</b> (M, Medium Priority)
+- [_] <b>UI System</b> (D, Low Priority)
+- [_] <b>Save System</b> (D, Low Priority)
+- [_] <b>Environmental Damage:</b>
+	- [_] <b>Spikes</b> (E++, Low Priority)
+	- [_] <b>Pits</b> (M, Low Priority)
+	- [_] <b>Dart Traps??</b> (??, ??)
+- [_] <b>Combo System</b> (D++, Low Priority)
+
+#### Closed Tasks:
+
+- [X] <b>Player Movement</b> (M, High Priority)
 
 ## Active Bugs:
 
